@@ -4,9 +4,9 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Image API',
+            title: 'Images API',
             version: '1.0.0',
-            description: 'API documentation for the Image Controller',
+            description: 'API documentation for the Images',
         },
         servers: [
             {

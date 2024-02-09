@@ -2,7 +2,7 @@ import { createServer } from './src/server';
 import config from './src/config';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './src/utils/swagger';
-
+import cors from 'cors' ;
 
 async function igniteServer() {
 
@@ -16,6 +16,8 @@ async function igniteServer() {
         process.exit(1)
     })
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    // to allowed request from locahost just for testing temp ....
+    app.use(cors({ origin: 'http://localhost:8081' }));
 }
 
 (async function run() {
