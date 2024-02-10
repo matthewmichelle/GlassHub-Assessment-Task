@@ -10,7 +10,7 @@ import path from "path";
 import { User } from "../data/models/user.entity";
 import httpStatus from "http-status";
 import { authenticate } from '../middlewares/authenticate'; // Import the middleware to run before the route handler
-import { ImageUploadService } from "../services/upload.service";
+import { excludeUserFromImage } from "../data/transformers/image.transformer";
 
 
 const storage = multer.diskStorage({
@@ -26,9 +26,7 @@ const upload = multer({ storage: storage });
 
 @route("/images")
 export class ImageController {
-    constructor(private readonly imageService: ImageService,
-        private readonly imageUploadService: ImageUploadService,
-    ) { }
+    constructor(private readonly imageService: ImageService) { }
 
     /**
      * @swagger
@@ -145,8 +143,28 @@ export class ImageController {
                 return;
             }
 
-            this.imageUploadService.handleUpload(req, res);
-            
+            upload.single("file")(req, res, async (err: any) => {
+                if (err) {
+                    console.error("Error uploading file:", err);
+                    res.status(httpStatus.BAD_REQUEST).json({ error: "Failed to upload file" });
+                    return;
+                }
+
+                const { latitude, longitude, userId }: ImageDto = req.body;
+                const filename = req.file?.filename || "";
+
+                const image: Image = {
+                    filename,
+                    latitude,
+                    longitude,
+                    user: new User(userId),
+                };
+
+                const result = await this.imageService.saveImage(image);
+                const transformer = excludeUserFromImage(result);
+
+                res.status(httpStatus.CREATED).json({ message: "Image uploaded successfully", image: transformer });
+            });
         } catch (error) {
             console.error("Error uploading image:", error);
             if (error instanceof ValidationError) {
@@ -158,5 +176,4 @@ export class ImageController {
             }
         }
     }
-
 }
