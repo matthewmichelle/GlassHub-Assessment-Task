@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { route, GET, POST } from "awilix-express";
+import { route, GET, POST, before } from "awilix-express";
 import { ImageService } from "../services/image.service";
 import { Image } from "../data/models/image.entity";
 import { ImageDto } from "../data/dto/imageDTO";
@@ -9,6 +9,8 @@ import multer from "multer";
 import path from "path";
 import { User } from "../data/models/user.entity";
 import httpStatus from "http-status";
+import { authenticate } from '../middlewares/authenticate'; // Import the middleware to run before the route handler
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -86,48 +88,50 @@ export class ImageController {
         }
     }
 
-     /**
-     * @swagger
-     * /images:
-     *   post:
-     *     summary: Upload an image
-     *     tags:
-     *       - Images
-     *     consumes:
-     *       - multipart/form-data
-     *     parameters:
-     *       - $ref: '#/components/parameters/file'
-     *       - name: latitude
-     *         in: formData
-     *         required: true
-     *         type: number
-     *         description: The latitude coordinate of the image location.
-     *       - name: longitude
-     *         in: formData
-     *         required: true
-     *         type: number
-     *         description: The longitude coordinate of the image location.
-     *       - name: userId
-     *         in: formData
-     *         required: true
-     *         type: string
-     *         description: The unique identifier of the user who uploaded the image.
-     *     responses:
-     *       '201':
-     *         description: Image uploaded successfully
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/Image'
-     *       '400':
-     *         description: Bad request
-     *       '422':
-     *         description: Unprocessable entity
-     *       '500':
-     *         description: Internal server error
-     */
+    /**
+    * @swagger
+    * /images:
+    *   post:
+    *     summary: Upload an image
+    *     tags:
+    *       - Images
+    *     consumes:
+    *       - multipart/form-data
+    *     parameters:
+    *       - $ref: '#/components/parameters/file'
+    *       - name: latitude
+    *         in: formData
+    *         required: true
+    *         type: number
+    *         description: The latitude coordinate of the image location.
+    *       - name: longitude
+    *         in: formData
+    *         required: true
+    *         type: number
+    *         description: The longitude coordinate of the image location.
+    *       - name: userId
+    *         in: formData
+    *         required: true
+    *         type: string
+    *         description: The unique identifier of the user who uploaded the image.
+    *     responses:
+    *       '201':
+    *         description: Image uploaded successfully
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/schemas/Image'
+    *       '400':
+    *         description: Bad request
+    *       '422':
+    *         description: Unprocessable entity
+    *       '500':
+    *         description: Internal server error
+    */
 
     @POST()
+    /// we can put any thing or change scenario to validate user of check user found or user had a permission
+    @before(authenticate)
     async uploadImage(req: Request, res: Response): Promise<void> {
         try {
             const uploadImageDto: ImageDto = plainToClass(ImageDto, req.body);

@@ -14,6 +14,8 @@ export default function (dataSource: any): AwilixContainer {
     const imageRepository = dataSource.getRepository(Image);
 
     const userRepository = dataSource.getRepository(User);
+
+
     // register services here
     // TODO: make service registration automattic
     container.register({

@@ -5,7 +5,7 @@ import { UserRepository } from "../repositories/user.repository";
 
 @injectable()
 export class UserService {
-    constructor(private readonly userRepository: UserRepository) {}
+    constructor(private readonly userRepository: UserRepository) { }
 
     async saveUser(user: User): Promise<User> {
         return await this.userRepository.save(user);

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { route, GET, POST } from "awilix-express";
+import { route, GET, POST, } from "awilix-express";
 import { UserService } from "../services/user.service";
 import { UserDto } from "../data/dto/userDTO";
 import { validate, ValidationError } from "class-validator";
@@ -10,8 +10,6 @@ import httpStatus from "http-status";
 @route("/users")
 export class UserController {
     constructor(private readonly userService: UserService) { }
-
-
     /**
      * @swagger
      * components:
@@ -72,35 +70,35 @@ export class UserController {
         }
     }
 
-     /**
-     * @swagger
-     * /users:
-     *   post:
-     *     summary: Create a new user
-     *     tags:
-     *       - Users
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/User'
-     *     responses:
-     *       201:
-     *         description: User created successfully
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/User'
-     *       422:
-     *         description: Unprocessable entity
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/ValidationError'
-     *       500:
-     *         description: Internal server error
-     */
+    /**
+    * @swagger
+    * /users:
+    *   post:
+    *     summary: Create a new user
+    *     tags:
+    *       - Users
+    *     requestBody:
+    *       required: true
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/components/schemas/User'
+    *     responses:
+    *       201:
+    *         description: User created successfully
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/schemas/User'
+    *       422:
+    *         description: Unprocessable entity
+    *         content:
+    *           application/json:
+    *             schema:
+    *               $ref: '#/components/schemas/ValidationError'
+    *       500:
+    *         description: Internal server error
+    */
 
     @POST()
     async createUser(req: Request, res: Response) {
@@ -132,4 +130,6 @@ export class UserController {
             }
         }
     }
+
+
 }
