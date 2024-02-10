@@ -6,9 +6,8 @@ Glasshub Project is a web application that facilitates the uploading, storage, a
 
 - **Node.js**: A JavaScript runtime for server-side logic.
 - **Express.js**: A web application framework for Node.js.
-- **Vue.js**: A progressive JavaScript framework for building user interfaces.
 - **PostgreSQL**: An open-source relational database management system.
-- **Axios**: A promise-based HTTP client for the browser and Node.js.
+
 
 ## Getting Started
 
@@ -45,10 +44,13 @@ Make sure you have the following installed:
     Create a `.env` file in the root directory of the project and add the following variables:
 
     ```plaintext
+    PORT=3000
+    NODE_ENV=development
     DB_HOST=localhost
-    DB_USER=your_postgres_username
-    DB_PASSWORD=your_postgres_password
-    DB_DATABASE=your_database_name
+    DB_PORT=
+    DB_USERNAME=
+    DB_PASSWORD=
+    DB_DATABASE=
     ```
 
 5. Start the server:
