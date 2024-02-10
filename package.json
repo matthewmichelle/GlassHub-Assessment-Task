@@ -4,6 +4,11 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "lint": "eslint --ext .js",
+        "lint-staged": "lint-staged",
+        "typeorm": "typeorm-ts-node-commonjs -d ./src/data/index.ts",
+        "migration:generate": "npm run typeorm migration:generate",
+        "migrate": "npm run typeorm migration:run",
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "ts-node-dev ./index.ts"
     },

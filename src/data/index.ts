@@ -1,5 +1,4 @@
-// require("reflect-metadata")
-import { DataSource, DataSourceOptions } from "typeorm";
+import { DataSource } from "typeorm";
 import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOptions";
 import config from "../config";
 
@@ -16,8 +15,8 @@ const ds_config: MysqlConnectionOptions = {
     extra: {
         insecureAuth: true,
     },
-    entities: [ "src/data/models/**/*.entity.ts" ],
-    // migrations: [ "src/data/migrations/**/*.ts" ],
+    entities: ["src/data/models/**/*.entity.ts"],
+    migrations: [ "src/data/migrations/**/*.ts" ],
 };
 
 export default new DataSource(ds_config);
