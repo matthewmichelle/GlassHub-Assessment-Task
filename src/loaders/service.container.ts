@@ -5,6 +5,7 @@ import { UserService } from "../services/user.service";
 // Import models
 import { Image } from "../data/models/image.entity";
 import { User } from "../data/models/user.entity";
+import { ImageUploadService } from "../services/upload.service";
 
 export default function (dataSource: any): AwilixContainer {
     const container = createContainer({
@@ -21,6 +22,7 @@ export default function (dataSource: any): AwilixContainer {
     container.register({
         imageService: asClass(ImageService).scoped(),
         userService: asClass(UserService).scoped(),
+        imageUploadService: asClass(ImageUploadService).scoped(),
         imageRepository: asValue(imageRepository),
         userRepository: asValue(userRepository),
     });

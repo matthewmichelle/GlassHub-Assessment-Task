@@ -10,6 +10,7 @@ import path from "path";
 import { User } from "../data/models/user.entity";
 import httpStatus from "http-status";
 import { authenticate } from '../middlewares/authenticate'; // Import the middleware to run before the route handler
+import { ImageUploadService } from "../services/upload.service";
 
 
 const storage = multer.diskStorage({
@@ -25,7 +26,9 @@ const upload = multer({ storage: storage });
 
 @route("/images")
 export class ImageController {
-    constructor(private readonly imageService: ImageService) { }
+    constructor(private readonly imageService: ImageService,
+        private readonly imageUploadService: ImageUploadService,
+    ) { }
 
     /**
      * @swagger
@@ -131,7 +134,7 @@ export class ImageController {
 
     @POST()
     /// we can put any thing or change scenario to validate user of check user found or user had a permission
-    @before(authenticate)
+    //@before(authenticate)
     async uploadImage(req: Request, res: Response): Promise<void> {
         try {
             const uploadImageDto: ImageDto = plainToClass(ImageDto, req.body);
@@ -142,26 +145,7 @@ export class ImageController {
                 return;
             }
 
-            upload.single("file")(req, res, async (err: any) => {
-                if (err) {
-                    console.error("Error uploading file:", err);
-                    res.status(httpStatus.BAD_REQUEST).json({ error: "Failed to upload file" });
-                    return;
-                }
-
-                const { latitude, longitude, userId }: ImageDto = req.body;
-                const filename = req.file?.filename || "";
-
-                const image: Image = {
-                    filename,
-                    latitude,
-                    longitude,
-                    user: new User(userId),
-                };
-
-                const result = await this.imageService.saveImage(image);
-                res.status(httpStatus.CREATED).json({ message: "Image uploaded successfully", image: result });
-            });
+            this.imageUploadService.handleUpload(req, res, this.imageService);
         } catch (error) {
             console.error("Error uploading image:", error);
             if (error instanceof ValidationError) {
@@ -173,4 +157,5 @@ export class ImageController {
             }
         }
     }
+
 }
