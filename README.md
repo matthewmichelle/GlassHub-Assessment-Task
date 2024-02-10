@@ -53,15 +53,21 @@ Make sure you have the following installed:
     DB_DATABASE=
     ```
 
-5. Start the server:
+5. Start the migration:
+
+    ```bash
+    npm run migrate
+    ```  
+
+6. Start the server:
 
     ```bash
     npm run dev 
     ```
 
-6. Access the application in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
+7. Access the application in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
 
-7. Access the api documentaion in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
+8. Access the api documentaion in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
 
 ## Usage
 
