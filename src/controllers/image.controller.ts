@@ -145,7 +145,8 @@ export class ImageController {
                 return;
             }
 
-            this.imageUploadService.handleUpload(req, res, this.imageService);
+            this.imageUploadService.handleUpload(req, res);
+            
         } catch (error) {
             console.error("Error uploading image:", error);
             if (error instanceof ValidationError) {
