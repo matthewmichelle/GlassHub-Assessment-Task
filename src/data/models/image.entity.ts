@@ -15,10 +15,10 @@ export class Image {
   user: User; // Define the relationship with the User entity
 
   // Additional properties
-  @Column({ nullable: true })
+  @Column({ nullable: true , type: 'real' })
   latitude: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true  , type: 'real'})
   longitude: number;
 
   constructor(id: number) {

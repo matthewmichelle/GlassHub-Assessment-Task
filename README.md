@@ -65,7 +65,7 @@ Make sure you have the following installed:
     npm run dev 
     ```
 
-7. Access the application in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
+7. Access the application in your browser at [http://localhost:3000/api-docs](http://localhost:3000).
 
 8. Access the api documentaion in your browser at [http://localhost:3000/api-docs](http://localhost:3000/api-docs).
 

@@ -1,10 +1,10 @@
 import { DataSource } from "typeorm";
-import { MysqlConnectionOptions } from "typeorm/driver/mysql/MysqlConnectionOptions";
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 import config from "../config";
 
 
-const ds_config: MysqlConnectionOptions = {
-    type: "mysql",
+const ds_config: PostgresConnectionOptions = {
+    type: "postgres",
     host: config.db_host,
     port: config.db_port,
     username: config.db_username,
